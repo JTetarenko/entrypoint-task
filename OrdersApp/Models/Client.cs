@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace OrdersApp.Models
 {
+    public enum GenderType
+    {
+        Male, Female
+    }
     public class Client
     {
-        public enum GenderType
-        {
-            Male, Female
-        }
         public int Id { get; set; }
         [Required(ErrorMessage = "The name is required")]
         [StringLength(60, MinimumLength = 3)]
@@ -26,7 +26,14 @@ namespace OrdersApp.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = false)]
         public DateTime BirthDate { get; set; }
-        public byte Gender { get; set; }
+        [Required(ErrorMessage = "The gender is required")]
+        public GenderType Gender { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+    }
+    public class ClientViewModel
+    {
+        public int Id { get; set; }
+        public GenderType Gender { get; set; }
         [Display(Name = "Gender name")]
         public string GenderName
         {
@@ -36,10 +43,14 @@ namespace OrdersApp.Models
                 return _gender.ToString();
             }
         }
-        [NotMapped]
+        public string Name { get; set; }
+        public string Email { get; set; }
+        [Display(Name = "Birth date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = false)]
+        public DateTime BirthDate { get; set; }
         [Display(Name = "Orders quantity")]
         public virtual int OrdersQty { get; set; }
-        [NotMapped]
         [DataType(DataType.Currency)]
         [Display(Name = "Average orders price")]
         public virtual decimal AvgOrdersPrice { get; set; }

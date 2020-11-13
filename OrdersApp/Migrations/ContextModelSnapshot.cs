@@ -33,8 +33,8 @@ namespace OrdersApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("Gender")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -63,8 +63,8 @@ namespace OrdersApp.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OrdersApp.Data;
 using OrdersApp.Models;
-using OrdersApp.Helpers;
 
 namespace OrdersApp
 {
@@ -24,7 +23,7 @@ namespace OrdersApp
         public async Task<IActionResult> Index()
         {
             var clients = from s in _context.Client
-                          select new Client
+                          select new ClientViewModel
                           {
                               Id = s.Id,
                               Name = s.Name,
@@ -32,7 +31,7 @@ namespace OrdersApp
                               BirthDate = s.BirthDate,
                               Gender = s.Gender,
                               OrdersQty = s.Orders.Count(),
-                              AvgOrdersPrice = s.Orders.Average(x => x.Product.Price)
+                              AvgOrdersPrice = s.Orders.Sum(x => (x.Quantity * x.Product.Price)) / s.Orders.Count()
                           };
 
             return View(await clients.ToListAsync());
@@ -41,9 +40,6 @@ namespace OrdersApp
         // GET: Clients/Create
         public IActionResult Create()
         {
-            // Create gender options list for select input
-            ViewBag.GendersList = SelectListHelper.GetGendersItemsForSelect();
-
             return View();
         }
 
@@ -76,9 +72,6 @@ namespace OrdersApp
             {
                 return NotFound();
             }
-
-            // Create gender options list for select input
-            ViewBag.GendersList = SelectListHelper.GetGendersItemsForSelect();
 
             return View(client);
         }

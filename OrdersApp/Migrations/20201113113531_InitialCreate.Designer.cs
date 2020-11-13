@@ -10,7 +10,7 @@ using OrdersApp.Data;
 namespace OrdersApp.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20201109104538_InitialCreate")]
+    [Migration("20201113113531_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,8 +35,8 @@ namespace OrdersApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("Gender")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -65,8 +65,8 @@ namespace OrdersApp.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

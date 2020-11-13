@@ -16,7 +16,7 @@ namespace OrdersApp.Migrations
                     Name = table.Column<string>(maxLength: 60, nullable: false),
                     Email = table.Column<string>(nullable: false),
                     BirthDate = table.Column<DateTime>(nullable: false),
-                    Gender = table.Column<byte>(nullable: false)
+                    Gender = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,7 +47,7 @@ namespace OrdersApp.Migrations
                     ClientId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    Status = table.Column<byte>(nullable: false)
+                    Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

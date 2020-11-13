@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OrdersApp.Data;
 using OrdersApp.Models;
-using OrdersApp.Helpers;
 
 namespace OrdersApp
 {
@@ -23,9 +22,8 @@ namespace OrdersApp
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            //var context = _context.Order.Include(o => o.Client).Include(o => o.Product);
             var orders = from s in _context.Order
-                         select new Order
+                         select new OrderViewModel
                          {
                              Id = s.Id,
                              ClientId = s.ClientId,
@@ -42,10 +40,8 @@ namespace OrdersApp
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["ClientId"] = new SelectList(_context.Client, "Id", "Name");
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Code");
-            // Create status options list for select input
-            ViewBag.StatusList = SelectListHelper.GetStatusItemsForSelect();
+            ViewBag.ClientId = new SelectList(_context.Client, "Id", "Name");
+            ViewBag.ProductId = new SelectList(_context.Product, "Id", "Code");
             return View();
         }
 
@@ -62,8 +58,8 @@ namespace OrdersApp
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientId"] = new SelectList(_context.Client, "Id", "Name", order.ClientId);
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Code", order.ProductId);
+            ViewBag.ClientId = new SelectList(_context.Client, "Id", "Name", order.ClientId);
+            ViewBag.ProductId = new SelectList(_context.Product, "Id", "Code", order.ProductId);
             return View(order);
         }
 
@@ -80,10 +76,8 @@ namespace OrdersApp
             {
                 return NotFound();
             }
-            ViewData["ClientId"] = new SelectList(_context.Client, "Id", "Name", order.ClientId);
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Code", order.ProductId);
-            // Create status options list for select input
-            ViewBag.StatusList = SelectListHelper.GetStatusItemsForSelect();
+            ViewBag.ClientId = new SelectList(_context.Client, "Id", "Name", order.ClientId);
+            ViewBag.ProductId = new SelectList(_context.Product, "Id", "Code", order.ProductId);
             return View(order);
         }
 
@@ -119,8 +113,8 @@ namespace OrdersApp
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientId"] = new SelectList(_context.Client, "Id", "Name", order.ClientId);
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Code", order.ProductId);
+            ViewBag.ClientId = new SelectList(_context.Client, "Id", "Name", order.ClientId);
+            ViewBag.ProductId = new SelectList(_context.Product, "Id", "Code", order.ProductId);
             return View(order);
         }
 
